@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF結合フォーム</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+  <h1 class="text-2xl font-bold mb-4">PDF結合フォーム</h1>
+
+  <form id="mergeForm" enctype="multipart/form-data"
+        class="bg-white p-6 rounded-xl shadow w-full max-w-md space-y-3">
+
+    <div id="list" class="space-y-3"></div>
+
+    <div class="flex justify-between">
+      <button type="button" id="addBtn"
+        class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">＋ファイル追加</button>
+
+      <button type="button" id="mergeBtn"
+        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">PDFを結合</button>
+    </div>
+  </form>
+
+  <script src="/static/main.js" defer></script>
+</body>
+</html>
