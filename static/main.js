@@ -68,7 +68,9 @@ mergeBtn.onclick = async () => {
 
   const formData = new FormData();
   // 各inputのファイルをFormDataに格納
-  document.querySelectorAll('input[type=file]').forEach(f => {
+  const inputFiles=document.querySelectorAll('input[type=file]');
+  
+  inputFiles.forEach(f => {
     if (f.files[0]) formData.append('pdfs', f.files[0]);
   });
   formData.append('filename', name);
