@@ -1,0 +1,11 @@
+services:
+  web:
+    build: .
+    container_name: flask_pdf_app
+    ports:
+      - "5050:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+    command: python app/main.py
