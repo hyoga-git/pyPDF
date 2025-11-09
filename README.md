@@ -1,32 +1,46 @@
-# PDF Merge Tool
+PDF Merge Tool
 
-Flask と pypdf、そしてブラウザ側で PDF.js を使って実装した PDF 結合アプリです。複数の PDF をブラウザ上でプレビューしながら順番を入れ替え、任意のファイル名でまとめてダウンロードできます。
+Flask と pypdf、それに PDF.js を組み合わせた PDF 結合アプリ。ブラウザでサムネイルを見ながら順番を並べ替え、任意のファイル名で一括ダウンロードできる。
 
-## 特長
-- フロントエンドは Tailwind CSS + PDF.js を利用しており、サムネイル付きでファイルを管理可能
-- 任意の数だけファイル入力欄を追加し、ドラッグではなくボタンで順序調整（▲/▼）
-- 出力ファイル名を結合時に指定でき、サーバー側でその名前を使って返却
-- サーバーは Flask + pypdf で動き、暗号化されていない PDF であればそのまま結合
+主なポイント
+・Tailwind CSS + PDF.js で視覚的にファイル管理
+・▲ ▼ ボタンで順序を制御、✕で削除
+・結合時に任意のファイル名を指定
+・Flask + pypdf で暗号化されていない PDF をそのままマージ
 
-## 必要環境
-- Python 3.9 以上（仮想環境を推奨）
-- `pip`
+必要なもの
+・Docker / Docker Compose v2
+・make（不要なら docker compose を直接使えば OK）
 
-## セットアップ
-```bash
-git clone <this-repo>
-cd pyPDF
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+使い方（Docker 前提）
+1) `docker compose build`
+2) `docker compose up`（バックグラウンドは `docker compose up -d`）
+3) ブラウザで http://127.0.0.1:5050/
+4) 終了時は `docker compose down`
 
-## 実行方法
-```bash
-source venv/bin/activate
-python main.py
-```
-デフォルトでは `http://127.0.0.1:5000/` でアプリが立ち上がります。
+よく使う補助コマンド
+・`docker compose logs -f` でログを追う
+・`docker compose exec web /bin/bash` でコンテナに入る
+・完全に消すなら `docker compose down --volumes --remove-orphans`
+
+参考: Python を直接動かす場合
+1) `python3 -m venv venv`
+2) `source venv/bin/activate`
+3) `pip install -r requirements.txt`
+4) `python app/main.py`
+この場合は http://127.0.0.1:5000/ でアクセス。
+
+注意事項
+・暗号化 PDF は事前に解除してからアップロード
+・巨大ファイルはプレビュー生成に時間がかかる
+・本番利用時は HTTPS やファイルサイズ制限などの対策を入れる
+
+構成メモ
+・`app/main.py` … Flask アプリ本体
+・`app/templates/index.html` … UI テンプレート
+・`app/static/main.js` … 入力ブロック管理と PDF プレビュー処理
+
+ライセンスは用途に合わせて追記すること。
 
 ## 使い方
 1. 画面上部の「＋ファイル追加」でファイル入力ブロックを必要なだけ増やす
@@ -43,8 +57,3 @@ python main.py
 ## 注意
 - 暗号化 PDF（パスワード付き）の場合は解除済みでアップロードしてください
 - 大きなファイルやページ数の多い PDF はブラウザのプレビュー生成に時間がかかることがあります
-- 本番利用する場合は HTTPS やファイルサイズ制限などの対策を必ず入れてください
-
-## ライセンス
-MIT などお好みに合わせて追記してください。
-
